@@ -19,11 +19,13 @@ public class PlayerUI : MonoBehaviour
         expSlider = transform.GetChild(1).GetChild(0).GetComponent<Image>();
     }
 
+    void Start()
+    {
+        playerStats = GameManager.Instance.playerStats;
+    }
+
     void Update()
     {
-        //FIXME: 优化？
-        if (playerStats == null)
-            playerStats = GameManager.Instance.playerStats;
         level.text = "Level " + playerStats.CurrentLevel.ToString("00");
         UpdateHealth();
         UpdateExp();
