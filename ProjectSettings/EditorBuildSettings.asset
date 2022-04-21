@@ -14,4 +14,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level/Big Plain.unity
     guid: 2e498ca3181829e45985241887882a9e
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: e4e0def573302ba448aab7f9081393aa, type: 2}
