@@ -1,76 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(GameInput))]
 public class ThirdPersonController : MonoBehaviour
 {
     CharacterController _controller;
-    InputAction _moveAction;
-    public InputReader input;
-    public Animator anim;
+    GameInput _input;
+    Animator _anim;
 
-    [Header("Settings")]
-    public float speed = 1;
-    public float currentSpeed;
-    public Vector2 moveInput;
+    [Header("Basic Settings")]
+    public float speed = 3;
+    public float gravity = -15;
 
     void Awake()
     {
+        _input = GetComponent<GameInput>();
         _controller = GetComponent<CharacterController>();
-        _moveAction = GetComponent<PlayerInput>().actions["Move"];
-        anim = GetComponent<Animator>();
-    }
-
-    void OnEnable()
-    {
-        // _moveAction.started += GetMoveInputStarted;
-        // _moveAction.performed += GetMoveInputPerformed;
-        // _moveAction.canceled += GetMoveInputCanceled;
-
-    }
-
-    void Start()
-    {
-
+        _anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-
         Move();
-    }
-
-    void GetMoveInputStarted(InputAction.CallbackContext context)
-    {
-        moveInput = context.ReadValue<Vector2>();
-        Debug.Log("Move Started" + moveInput);
-    }
-
-    void GetMoveInputPerformed(InputAction.CallbackContext context)
-    {
-        moveInput = context.ReadValue<Vector2>();
-        Debug.Log("Move Performed" + moveInput);
-    }
-
-    void GetMoveInputCanceled(InputAction.CallbackContext context)
-    {
-        moveInput = context.ReadValue<Vector2>();
-        Debug.Log("Move Canceled" + moveInput);
     }
 
     void Move()
     {
-        Vector3 direction = transform.forward * moveInput.y + transform.right * moveInput.x;
-        Vector3 selfDirection = new Vector3(moveInput.x, 0, moveInput.y);
-        currentSpeed = new Vector3(_controller.velocity.x, 0, _controller.velocity.y).magnitude;
+        Vector3 direction = transform.forward * _input.moveInput.y + transform.right * _input.moveInput.x;
+        Vector3 vertical = Vector3.up * gravity * Time.deltaTime;
 
-        _controller.Move(direction * speed * Time.deltaTime);
-        // transform.Translate(direction * speed * Time.deltaTime, Space.World);
-        // transform.Translate(selfDirection * speed * Time.deltaTime);
-        // transform.position += direction * speed * Time.deltaTime;
+        _controller.Move(direction * speed * Time.deltaTime + vertical);
 
+        _anim.SetFloat("speed", _controller.velocity.magnitude);
     }
 
+    //TODO: 地面监测
+    //TODO: 转向
+    //TODO: 鼠标控制
 }
