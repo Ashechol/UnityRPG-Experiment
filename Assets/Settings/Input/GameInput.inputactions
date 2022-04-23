@@ -1,8 +1,8 @@
 {
-    "name": "GameInputAction",
+    "name": "GameInput",
     "maps": [
         {
-            "name": "Player",
+            "name": "Gameplay",
             "id": "97c8e06c-29ce-47c8-91e5-822f5fb46da8",
             "actions": [
                 {
@@ -16,7 +16,7 @@
                 {
                     "name": "Look",
                     "type": "Value",
-                    "id": "7575c667-81c2-4246-8c26-9f3c2dae90b0",
+                    "id": "cdaebe6f-4131-4c02-8dc8-89f0c2e66e7c",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
@@ -25,6 +25,22 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "41fd7194-6541-4736-99c2-6ffb26bde336",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "NoramlAttack",
+                    "type": "Button",
+                    "id": "4f032cf2-a01c-43a7-bf61-5c8971a2fd26",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ChargeAttack",
+                    "type": "Button",
+                    "id": "971fb894-9be4-4a68-ba2f-99dd114624a7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -121,7 +137,51 @@
                 },
                 {
                     "name": "",
-                    "id": "4dc42b85-85e3-47f4-8bcb-9e6364a569ff",
+                    "id": "14fa4408-1c1c-469c-9868-8ea134e59834",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMounse",
+                    "action": "NoramlAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e566d3b-cb81-4a63-9aff-aa0fc7986121",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "NoramlAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f249aec0-a9ec-41d5-9986-5a29214da8cc",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMounse",
+                    "action": "ChargeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b55c3b80-187a-40b6-9d2c-3c2669b46294",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ChargeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b972bdc7-3210-4f92-b36f-3c6319d114dd",
                     "path": "<Pointer>/delta",
                     "interactions": "",
                     "processors": "InvertVector2(invertX=false),ScaleVector2(x=0.05,y=0.05)",
@@ -132,10 +192,10 @@
                 },
                 {
                     "name": "",
-                    "id": "0f1583f3-53d8-4fdf-b093-d9af026f6f7e",
+                    "id": "de148289-9ac0-427d-b58a-e4366e72d069",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "StickDeadzone",
+                    "processors": "",
                     "groups": "Gamepad",
                     "action": "Look",
                     "isComposite": false,
