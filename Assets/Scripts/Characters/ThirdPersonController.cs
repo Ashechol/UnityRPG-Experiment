@@ -67,7 +67,23 @@ public class ThirdPersonController : MonoBehaviour
 
     void Move()
     {
+        float targetSpeed;
+        Vector3 direction = new Vector3(_input.moveInput.x, 0.0f, _input.moveInput.y);
 
+        if (direction == Vector3.zero)
+            targetSpeed = 0;
+        else
+        {
+            _targetRotation = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
+
+            transform.rotation = Quaternion.Euler(0.0f, _targetRotation, 0.0f);
+
+            targetSpeed = speed;
+        }
+
+        Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+
+        _controller.Move(targetDirection.normalized * targetSpeed * Time.deltaTime);
     }
 
     void GroundedCheck()
