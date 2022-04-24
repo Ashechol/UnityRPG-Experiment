@@ -55,7 +55,7 @@ public class ThirdPersonController : MonoBehaviour
         _cameraYaw = _input.lookInput.x;
         _cameraPitch = _input.lookInput.y;
 
-        cameraTarget.transform.Rotate(_cameraPitch, _cameraYaw, 0);
+        cameraTarget.transform.Rotate(0, _cameraYaw, 0);
     }
 
     void Move()
