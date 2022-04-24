@@ -27,8 +27,8 @@ public class GameInput : MonoBehaviour
         _input.onActionTriggered += GetLookInput;
         _input.onActionTriggered += GetNormalAttackInput;
 
-        _input.actions["ChargeAttack"].performed += GetChargeAttackInput;
-        _input.actions["ChargeAttack"].canceled += GetChargeAttackInput;
+        // _input.actions["ChargeAttack"].performed += GetChargeAttackInput;
+        // _input.actions["ChargeAttack"].canceled += GetChargeAttackInput;
     }
 
     void Update()

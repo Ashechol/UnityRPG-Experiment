@@ -9,9 +9,9 @@ public class ThirdPersonController : MonoBehaviour
     GameInput _input;
     Animator _anim;
     Vector3 _velocity;
-
-    float _cameraPitch;
-    float _cameraYaw;
+    GameObject _mainCamera;
+    float _targetRotation;
+    float _rotationVelocity;
 
     [Header("Basic Settings")]
     public float speed = 3;
@@ -26,17 +26,22 @@ public class ThirdPersonController : MonoBehaviour
 
     [Header("Cinemachine")]
     public GameObject cameraTarget;
+    public float pitchMax = 70;
+    public float pitchMin = -30;
+    float _cameraPitch;
+    float _cameraYaw;
 
     void Awake()
     {
         _input = GetComponent<GameInput>();
         _controller = GetComponent<CharacterController>();
         _anim = GetComponent<Animator>();
+        _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     void Start()
     {
-
+        _cameraYaw = cameraTarget.transform.rotation.eulerAngles.y;
     }
 
     void Update()
@@ -52,29 +57,31 @@ public class ThirdPersonController : MonoBehaviour
 
     void CameraControll()
     {
-        _cameraYaw = _input.lookInput.x;
-        _cameraPitch = _input.lookInput.y;
+        _cameraYaw += _input.lookInput.x;
+        _cameraPitch += _input.lookInput.y;
+        _cameraYaw = ClampAngle(_cameraYaw, float.MinValue, float.MaxValue);
+        _cameraPitch = ClampAngle(_cameraPitch, pitchMin, pitchMax);
 
-        cameraTarget.transform.Rotate(0, _cameraYaw, 0);
+        cameraTarget.transform.rotation = Quaternion.Euler(_cameraPitch, _cameraYaw, 0.0f);
     }
 
     void Move()
     {
-        _velocity = transform.forward * _input.moveInput.y * speed;
 
-        if (!grounded)
-            _velocity += Vector3.up * gravity;
-
-        _controller.Move(_velocity * Time.deltaTime);
-        transform.Rotate(Vector3.up, _input.moveInput.x * sensitivity * Time.deltaTime);
-
-        _anim.SetFloat("speed", _controller.velocity.magnitude);
     }
 
     void GroundedCheck()
     {
         Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y + groundedOffset, transform.position.z);
         grounded = Physics.CheckSphere(spherePosition, groundedRadius, groundedLayer, QueryTriggerInteraction.Ignore);
+    }
+
+    float ClampAngle(float angle, float min, float max)
+    {
+        if (angle > 360f) angle -= 360;
+        if (angle < -360f) angle += 360;
+
+        return Mathf.Clamp(angle, min, max);
     }
 
     void OnDrawGizmosSelected()
