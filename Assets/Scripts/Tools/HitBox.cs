@@ -8,7 +8,7 @@ public class HitBox : MonoBehaviour
     Collider coll;
     DamageType dmgType;
     public bool isHit;
-    public CharacterStats attacker;
+    CharacterStats attacker;
 
     public DamageType DmgType { set { dmgType = value; } }
 
@@ -20,6 +20,7 @@ public class HitBox : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        Debug.Log("hit");
         //TODO: 能否优化?
         if (other.CompareTag("Player"))
         {
@@ -28,6 +29,10 @@ public class HitBox : MonoBehaviour
 
             if (dmgType == DamageType.SKILL)
                 other.GetComponent<PlayerStats>().TakeDamage(attacker.SkillDamage, true);
+        }
+        else
+        {
+            other.GetComponent<EnemyStats>().TakeDamage(attacker.Damage, attacker.isCritical);
         }
     }
 }

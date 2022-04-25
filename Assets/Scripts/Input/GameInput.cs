@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +18,7 @@ public class GameInput : MonoBehaviour
     {
         _input = GetComponent<PlayerInput>();
         lookAction = _input.actions["Look"];
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void OnEnable()
@@ -26,6 +26,7 @@ public class GameInput : MonoBehaviour
         _input.onActionTriggered += GetMoveInput;
         _input.onActionTriggered += GetLookInput;
         _input.onActionTriggered += GetNormalAttackInput;
+        _input.onActionTriggered += GetChargeAttackInput;
 
         // _input.actions["ChargeAttack"].performed += GetChargeAttackInput;
         // _input.actions["ChargeAttack"].canceled += GetChargeAttackInput;
@@ -58,12 +59,23 @@ public class GameInput : MonoBehaviour
 
     void GetNormalAttackInput(InputAction.CallbackContext context)
     {
-
-        normalAttack = context.action.name == "NormalAttack" ? true : false;
+        if (context.action.name == "NormalAttack")
+        {
+            if (context.performed)
+                normalAttack = true;
+            else
+                normalAttack = false;
+        }
     }
 
     void GetChargeAttackInput(InputAction.CallbackContext context)
     {
-        normalAttack = context.action.name == "ChargeAttack" ? true : false;
+        if (context.action.name == "ChargeAttack")
+        {
+            if (context.performed)
+                chargeAttack = true;
+            else
+                chargeAttack = false;
+        }
     }
 }
