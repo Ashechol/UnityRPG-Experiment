@@ -8,13 +8,23 @@ public class StopAgent : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponent<NavMeshAgent>().isStopped = true;
+        NavMeshAgent nav;
+        if (animator.TryGetComponent<NavMeshAgent>(out nav))
+            nav.isStopped = true;
+        animator.GetComponent<GameInput>().isStopped = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponent<NavMeshAgent>().isStopped = true;
+        NavMeshAgent nav;
+        if (animator.TryGetComponent<NavMeshAgent>(out nav))
+            animator.GetComponent<NavMeshAgent>().isStopped = true;
+    }
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.GetComponent<GameInput>().isStopped = false;
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

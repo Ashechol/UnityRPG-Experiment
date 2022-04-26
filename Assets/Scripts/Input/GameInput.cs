@@ -13,6 +13,7 @@ public class GameInput : MonoBehaviour
     [HideInInspector]
     public bool normalAttack;
     public bool chargeAttack;
+    public bool isStopped;
 
     void Awake()
     {

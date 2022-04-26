@@ -97,7 +97,7 @@ public class DogKnight : MonoBehaviour
 
 
         // rotation
-        if (_input.moveInput == Vector2.zero)
+        if (_input.moveInput == Vector2.zero || _input.isStopped)
             currentSpeed = 0.0f;
         else
         {
